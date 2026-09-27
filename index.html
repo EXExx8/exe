@@ -128,11 +128,13 @@
       .card p { margin: 0; color: #d6d5d5; font-size: 14px; line-height: 1.6; }
 
       .playlist { margin-top: 86px; border-top: 1px solid var(--line); }
-      .track { display: grid; grid-template-columns: 70px 1fr auto; gap: 20px; align-items: center; padding: 21px 0; border-bottom: 1px solid var(--line); cursor: pointer; color: inherit; text-decoration: none; }
+      .track { display: grid; grid-template-columns: 70px 1fr auto; gap: 20px; align-items: center; padding: 21px 0; border-bottom: 1px solid var(--line); color: inherit; }
       .track:hover { color: var(--red); }
       .track-id { color: var(--muted); font: 12px 'DM Mono', monospace; }
       .track-title { font-size: clamp(18px, 2.4vw, 29px); font-weight: 700; letter-spacing: -.04em; }
       .track-genre { color: var(--muted); font: 12px 'DM Mono', monospace; text-transform: uppercase; }
+      .spotify-track { padding-bottom: 18px; }
+      .spotify-player { grid-column: 1 / -1; width: 100%; height: 152px; border: 0; border-radius: 12px; margin-top: 2px; }
       .chamba {
         display: grid;
         grid-template-columns: 1.35fr 1fr;
@@ -315,17 +317,20 @@
       <section class="playlist">
         <div class="section-head">
           <h2>Canciones favoritas</h2>
-          <span>Toca una canción para abrir Spotify</span>
+          <span>Dale play para escuchar aquí</span>
         </div>
-        <a class="track" href="https://open.spotify.com/track/40riOy7x9W7GXjyGp4pjAv" target="_blank" rel="noopener noreferrer">
+        <div class="track spotify-track">
           <span class="track-id">01</span><span class="track-title">Hotel California</span><span class="track-genre">Eagles</span>
-        </a>
-        <a class="track" href="https://open.spotify.com/track/1XndkJQ1py9Kh8OpFFJHIE" target="_blank" rel="noopener noreferrer">
+          <iframe class="spotify-player" src="https://open.spotify.com/embed/track/40riOy7x9W7GXjyGp4pjAv?utm_source=generator" title="Reproductor de Hotel California de Eagles" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
+        <div class="track spotify-track">
           <span class="track-id">02</span><span class="track-title">Helena</span><span class="track-genre">MCR</span>
-        </a>
-        <a class="track" href="https://open.spotify.com/track/4GNMgGyZcgnE4nEdYFWJGn" target="_blank" rel="noopener noreferrer">
+          <iframe class="spotify-player" src="https://open.spotify.com/embed/track/1XndkJQ1py9Kh8OpFFJHIE?utm_source=generator" title="Reproductor de Helena de My Chemical Romance" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
+        <div class="track spotify-track">
           <span class="track-id">03</span><span class="track-title">Red Swan</span><span class="track-genre">YOSHIKI · HYDE</span>
-        </a>
+          <iframe class="spotify-player" src="https://open.spotify.com/embed/track/4GNMgGyZcgnE4nEdYFWJGn?utm_source=generator" title="Reproductor de Red Swan de YOSHIKI y HYDE" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
       </section>
 
       <section class="anime-zone" id="anime">
