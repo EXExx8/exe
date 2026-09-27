@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EXE</title>
+    <meta name="description" content="EXE — una pequeña página personal." />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+      :root {
+        --ink: #f8f7f2;
+        --paper: #101114;
+        --red: #ed2437;
+        --blue: #57b7eb;
+        --muted: #a9abb3;
+        --line: rgba(248, 247, 242, 0.16);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Manrope, sans-serif;
+        overflow-x: hidden;
+      }
+
+      .noise {
+        position: fixed;
+        z-index: 10;
+        inset: 0;
+        pointer-events: none;
+        opacity: .12;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+      }
+
+      nav {
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px clamp(22px, 6vw, 84px);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .logo { color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .12em; }
+      nav a { color: var(--ink); text-decoration: none; opacity: .8; }
+      nav a:hover { color: var(--blue); opacity: 1; }
+
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        display: grid;
+        align-content: end;
+        padding: 130px clamp(22px, 6vw, 84px) 60px;
+        background:
+          linear-gradient(90deg, rgba(10, 10, 12, .93) 0%, rgba(10, 10, 12, .38) 61%, rgba(10, 10, 12, .48) 100%),
+          linear-gradient(0deg, #101114 0%, transparent 35%),
+          url('preview-chase.png') center / cover;
+      }
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: repeating-linear-gradient(90deg, transparent 0 68px, rgba(255,255,255,.04) 69px 70px);
+      }
+      .hero-content { position: relative; z-index: 1; max-width: 780px; }
+      .eyebrow {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        color: var(--blue);
+        font: 500 12px 'DM Mono', monospace;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .eyebrow::before { content: ''; width: 34px; height: 2px; background: currentColor; }
+      h1 {
+        max-width: 720px;
+        margin: 15px 0 22px;
+        font: 400 clamp(64px, 12vw, 154px)/.78 'Bebas Neue', sans-serif;
+        letter-spacing: -.02em;
+        text-transform: uppercase;
+      }
+      h1 em { color: var(--red); font-style: normal; }
+      .hero p { max-width: 500px; color: #d1d2d6; line-height: 1.7; font-size: clamp(14px, 1.7vw, 17px); }
+      .scroll { position: absolute; z-index: 2; right: clamp(22px, 6vw, 84px); bottom: 60px; writing-mode: vertical-rl; color: var(--muted); font: 12px 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+
+      main { max-width: 1400px; margin: auto; padding: 0 clamp(22px, 6vw, 84px) 78px; }
+      .intro { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; padding: 86px 0 60px; border-bottom: 1px solid var(--line); }
+      .number { color: var(--red); font: 24px 'DM Mono', monospace; }
+      .intro p { margin: 0; max-width: 760px; font-size: clamp(24px, 3.6vw, 45px); font-weight: 700; line-height: 1.16; letter-spacing: -.045em; }
+
+      .section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; padding: 80px 0 24px; }
+      h2 { margin: 0; font: 52px/1 'Bebas Neue', sans-serif; letter-spacing: .03em; text-transform: uppercase; }
+      .section-head span { color: var(--muted); font: 12px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .1em; }
+      .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+      .card {
+        position: relative;
+        min-height: 390px;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        padding: 26px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: #1a1b20;
+        transition: transform .25s ease, border-color .25s ease;
+      }
+      .card:hover { transform: translateY(-7px); border-color: var(--blue); }
+      .card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(7,8,10,.95), rgba(7,8,10,.08) 85%); z-index: 1; }
+      .card > * { position: relative; z-index: 2; }
+      .card .art { position: absolute; z-index: 0; inset: 0; display: grid; place-items: center; color: white; font: 220px 'Bebas Neue', sans-serif; transition: transform .5s ease; }
+      .card:hover .art { transform: scale(1.1) rotate(-3deg); }
+      .music .art { background: radial-gradient(circle at 50% 45%, #ec2541 0 9%, #711525 10% 11%, transparent 12%), repeating-radial-gradient(circle at 50% 45%, #d8263f 0 7%, #0c0d11 8% 13%); }
+      .games .art { background: linear-gradient(135deg, #1e73ae, #0a111d 55%, #ed2437); text-shadow: 10px 10px 0 rgba(0,0,0,.3); }
+      .travel .art { background: linear-gradient(160deg, #fcc373, #e57d5e 48%, #333b57 49%, #11131d 100%); font-size: 155px; }
+      .tag { color: var(--blue); font: 11px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+      .card h3 { margin: 9px 0 4px; font-size: 27px; letter-spacing: -.04em; }
+      .card p { margin: 0; color: #d6d5d5; font-size: 14px; line-height: 1.6; }
+
+      .playlist { margin-top: 86px; border-top: 1px solid var(--line); }
+      .track { display: grid; grid-template-columns: 70px 1fr auto; gap: 20px; align-items: center; padding: 21px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+      .track:hover, .track.active { color: var(--red); }
+      .track-id { color: var(--muted); font: 12px 'DM Mono', monospace; }
+      .track-title { font-size: clamp(18px, 2.4vw, 29px); font-weight: 700; letter-spacing: -.04em; }
+      .track-genre { color: var(--muted); font: 12px 'DM Mono', monospace; text-transform: uppercase; }
+      .now-playing { min-height: 20px; padding-top: 20px; color: var(--blue); font: 12px 'DM Mono', monospace; letter-spacing: .03em; }
+
+      .chamba {
+        display: grid;
+        grid-template-columns: 1.35fr 1fr;
+        gap: 34px;
+        align-items: center;
+        margin-top: 86px;
+        padding: clamp(32px, 5vw, 70px);
+        background: var(--blue);
+        color: #09131b;
+      }
+      .chamba h2 { font-size: clamp(64px, 9vw, 122px); line-height: .82; }
+      .chamba p { max-width: 380px; margin: 0; font-size: 18px; font-weight: 700; line-height: 1.5; }
+      .chamba .stamp { margin-top: 18px; font: 12px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+
+      .anime-zone { margin-top: 86px; }
+      .anime-banner {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 32px;
+        align-items: end;
+        padding: clamp(30px, 5vw, 66px);
+        background: var(--red);
+        color: #fff;
+      }
+      .anime-banner h2 { font-size: clamp(70px, 10.5vw, 145px); line-height: .77; }
+      .anime-banner p { max-width: 380px; margin: 0; font-size: 17px; font-weight: 700; line-height: 1.55; }
+      .anime-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px; }
+      .anime-card {
+        position: relative;
+        min-height: 470px;
+        display: flex;
+        align-items: end;
+        overflow: hidden;
+        background: #191a21;
+        border: 1px solid var(--line);
+        width: 100%;
+        padding: 0;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+      .anime-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
+      .anime-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(5, 5, 7, .97), rgba(5, 5, 7, 0) 68%); }
+      .anime-card:hover img { transform: scale(1.08); }
+      .anime-copy { position: relative; z-index: 1; padding: 27px; }
+      .anime-copy .tag { color: var(--blue); }
+      .anime-copy h3 { margin: 7px 0 6px; font-size: clamp(26px, 3vw, 38px); line-height: 1; letter-spacing: -.055em; }
+      .anime-copy p { margin: 0; color: #e0e0e2; font-size: 13px; line-height: 1.6; }
+
+      .meme-zone { margin-top: 15px; }
+      .meme-card { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; overflow: hidden; background: #e6dfd0; color: #111114; }
+      .meme-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(34px, 6vw, 76px); }
+      .meme-copy .tag { color: var(--red); }
+      .meme-copy h2 { margin: 12px 0 0; font-size: clamp(56px, 8.5vw, 118px); line-height: .78; }
+      .meme-card img { width: 100%; height: 100%; min-height: 350px; object-fit: cover; object-position: center; }
+
+      .anime-modal { width: min(1120px, calc(100% - 28px)); max-height: min(880px, calc(100% - 28px)); overflow: auto; padding: clamp(28px, 5vw, 62px); color: var(--ink); background: #111217; border: 1px solid rgba(255,255,255,.3); }
+      .anime-modal::backdrop { background: rgba(0, 0, 0, .88); backdrop-filter: blur(7px); }
+      .modal-close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 42px; height: 42px; padding: 0; color: var(--ink); background: #25262e; border: 1px solid var(--line); border-radius: 50%; font-size: 28px; line-height: 1; cursor: pointer; }
+      .modal-close:hover { color: var(--red); border-color: var(--red); }
+      .modal-kicker { color: var(--blue); font: 12px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+      .modal-title { margin: 10px 0 14px; font: clamp(58px, 10vw, 130px)/.8 'Bebas Neue', sans-serif; letter-spacing: .02em; text-transform: uppercase; }
+      .modal-description { max-width: 620px; margin: 0 0 28px; color: #d5d5d8; line-height: 1.6; }
+      .anime-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .anime-gallery img { width: 100%; height: 360px; object-fit: cover; background: #24252c; }
+
+      .zero-zone { margin-top: 15px; }
+      .zero-trigger { width: 100%; min-height: 390px; padding: clamp(34px, 6vw, 72px); color: #111114; background: #f0cf38; border: 0; font: inherit; text-align: left; cursor: pointer; transition: filter .2s ease, transform .2s ease; }
+      .zero-trigger:hover { filter: brightness(1.08); transform: translateY(-4px); }
+      .zero-trigger .tag { color: #111114; }
+      .zero-trigger h2 { max-width: 900px; margin: 13px 0 0; font-size: clamp(66px, 10vw, 144px); line-height: .77; }
+      .zero-trigger .hint { display: block; margin-top: 28px; font: 12px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+      .zero-modal { width: min(820px, calc(100% - 28px)); padding: clamp(32px, 6vw, 76px); color: #15140c; background: #f0cf38; border: 0; }
+      .zero-modal::backdrop { background: rgba(0, 0, 0, .88); backdrop-filter: blur(7px); }
+      .zero-modal h2 { margin: 12px 0 20px; font-size: clamp(58px, 9vw, 116px); line-height: .76; }
+      .zero-modal h2 em { color: var(--red); font-style: normal; }
+      .zero-modal p:last-child { max-width: 520px; margin: 0; font-size: 17px; font-weight: 700; line-height: 1.55; }
+      .zero-modal .modal-close { color: #15140c; background: rgba(255,255,255,.45); border-color: rgba(0,0,0,.2); }
+
+      footer { display: flex; justify-content: space-between; gap: 20px; padding: 28px clamp(22px, 6vw, 84px); background: var(--red); color: #fff; font: 12px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .07em; }
+
+      @media (max-width: 700px) {
+        .hero { min-height: 740px; background-position: 62% center; }
+        nav a { display: none; }
+        .scroll { display: none; }
+        .intro { grid-template-columns: 1fr; gap: 18px; padding-top: 62px; }
+        .cards { grid-template-columns: 1fr; }
+        .card { min-height: 300px; }
+        .section-head { padding-top: 58px; }
+        .chamba, .anime-banner { grid-template-columns: 1fr; gap: 22px; margin-top: 62px; }
+        .anime-grid { grid-template-columns: 1fr; }
+        .anime-card { min-height: 390px; }
+        .meme-card { grid-template-columns: 1fr; }
+        .meme-card img { min-height: 280px; max-height: 470px; }
+        .anime-gallery { grid-template-columns: 1fr; }
+        .anime-gallery img { height: 300px; }
+        footer { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <nav>
+      <span class="logo">EXE</span>
+      <a href="#favoritos">Ver favoritos ↓</a>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">EXE · Archivo personal</div>
+        <h1>Las cosas que <em>me mueven.</em></h1>
+        <p>Un rincón para guardar mis obsesiones: escenas que se sienten como cine, música a todo volumen y aventuras que no se olvidan.</p>
+      </div>
+      <span class="scroll">Desliza para explorar</span>
+    </header>
+
+    <main>
+      <section class="intro">
+        <span class="number">01 / SOBRE MÍ</span>
+        <p>No todo tiene que tener sentido. A veces una canción, una ciudad o una escena de Spider-Man es suficiente para hacer el día mucho mejor.</p>
+      </section>
+
+      <section id="favoritos">
+        <div class="section-head">
+          <h2>Mis favoritos</h2>
+          <span>Selecciona una tarjeta</span>
+        </div>
+        <div class="cards">
+          <article class="card music">
+            <div class="art">◉</div>
+            <span class="tag">01 · Música</span>
+            <h3>Beats que se sienten</h3>
+            <p>Para caminar de noche, imaginar edits y subirle demasiado al volumen.</p>
+          </article>
+          <article class="card games">
+            <div class="art">PLAY</div>
+            <span class="tag">02 · Videojuegos</span>
+            <h3>Una partida más</h3>
+            <p>Mundos abiertos, misiones imposibles y ese “solo cinco minutos” que nunca son cinco.</p>
+          </article>
+          <article class="card travel">
+            <div class="art">✦</div>
+            <span class="tag">03 · Viajes</span>
+            <h3>Lugares nuevos</h3>
+            <p>Atardeceres, calles desconocidas y fotos que luego se convierten en recuerdos.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="playlist">
+        <div class="section-head">
+          <h2>En repetición</h2>
+          <span>Haz clic para escuchar la vibra</span>
+        </div>
+        <div class="track active" data-track="▶ Reproduciendo: Paparazzi (Dubstep · Slowed)">
+          <span class="track-id">01</span><span class="track-title">Paparazzi — Slowed</span><span class="track-genre">Dubstep</span>
+        </div>
+        <div class="track" data-track="▶ Reproduciendo: After Dark">
+          <span class="track-id">02</span><span class="track-title">After Dark</span><span class="track-genre">Noche</span>
+        </div>
+        <div class="track" data-track="▶ Reproduciendo: Midnight City">
+          <span class="track-id">03</span><span class="track-title">Midnight City</span><span class="track-genre">Viaje</span>
+        </div>
+        <div class="now-playing" id="now-playing">▶ Reproduciendo: Paparazzi (Dubstep · Slowed)</div>
+      </section>
+
+      <section class="anime-zone" id="anime">
+        <div class="anime-banner">
+          <h2>Tiver<br>puta.</h2>
+          <p>El multiverso definitivo: volver a empezar, explotar todo y navegar hasta encontrar el One Piece.</p>
+        </div>
+        <div class="anime-grid">
+          <button class="anime-card" type="button" data-anime="rezero" aria-label="Abrir galería de Re:ZERO">
+            <img src="https://www.arthipo.com/image/cache/catalog/poster/anime/700-1341/anime980-re-zero-anime-manga-poster-802x1100.webp" alt="Personajes de Re:ZERO" />
+            <div class="anime-copy"><span class="tag">01 · Isekai oscuro</span><h3>Re:ZERO</h3><p>Reinicios, decisiones imposibles y ese tipo de historia que te deja pensando.</p></div>
+          </button>
+          <button class="anime-card" type="button" data-anime="konosuba" aria-label="Abrir galería de KonoSuba">
+            <img src="https://picfiles.alphacoders.com/379/thumb-1920-379757.jpg" alt="Personajes de KonoSuba" />
+            <div class="anime-copy"><span class="tag">02 · Caos mágico</span><h3>KonoSuba</h3><p>Una party desastrosa, humor sin pausa y la explosión más icónica.</p></div>
+          </button>
+          <button class="anime-card" type="button" data-anime="onepiece" aria-label="Abrir galería de One Piece">
+            <img src="https://image.tmdb.org/t/p/w500/y7IozUi2dwICMl8aGvLxjTmJDYZ.jpg" alt="Tripulación de One Piece" />
+            <div class="anime-copy"><span class="tag">03 · Aventura infinita</span><h3>One Piece</h3><p>Amistad, mar, sueños enormes y una tripulación que nunca abandona.</p></div>
+          </button>
+        </div>
+      </section>
+
+      <section class="meme-zone" aria-label="Me gusta la pollita negra">
+        <div class="meme-card">
+          <div class="meme-copy"><span class="tag">04 · Meme favorito</span><h2>Me gusta la<br>pollita negra.</h2></div>
+          <img src="pollita-negra.png" alt="Meme de gorila compartido por el usuario" />
+        </div>
+      </section>
+
+      <section class="chamba" aria-label="Tiver dame chamba">
+        <h2>Tiver,<br>dame chamba.</h2>
+        <div>
+          <p>Creatividad, ganas de hacer cosas cool y una playlist lista para trabajar.</p>
+          <div class="stamp">Disponible para proyectos ✦</div>
+        </div>
+      </section>
+
+      <section class="zero-zone" aria-label="Zero modo amarillo">
+        <button class="zero-trigger" id="zero-trigger" type="button">
+          <span class="tag">05 · Zona clasificada</span>
+          <h2>Zero:<br>modo amarillo.</h2>
+          <span class="hint">Toca para abrir el archivo ↓</span>
+        </button>
+      </section>
+    </main>
+
+    <dialog class="anime-modal" id="anime-modal" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" type="button" aria-label="Cerrar galería">×</button>
+      <div id="anime-modal-content"></div>
+    </dialog>
+
+    <dialog class="zero-modal" id="zero-modal" aria-labelledby="zero-modal-title">
+      <button class="modal-close" id="zero-modal-close" type="button" aria-label="Cerrar aviso">×</button>
+      <span class="tag">Archivo confidencial · 00-0</span>
+      <h2 id="zero-modal-title">Estás doxxeado<br><em>(en broma).</em></h2>
+      <p>Los datos privados no se comparten. Esto es solo una sección de broma para la página.</p>
+    </dialog>
+
+    <footer>
+      <span>Hecho de escenas, música y momentos.</span>
+      <span>EXE © 2026</span>
+    </footer>
+
+    <script>
+      const tracks = document.querySelectorAll('.track');
+      const nowPlaying = document.querySelector('#now-playing');
+      tracks.forEach((track) => track.addEventListener('click', () => {
+        tracks.forEach((item) => item.classList.remove('active'));
+        track.classList.add('active');
+        nowPlaying.textContent = track.dataset.track;
+      }));
+
+      const animeLibrary = {
+        rezero: {
+          title: 'Re:ZERO',
+          kicker: 'Isekai · bucles de tiempo',
+          description: 'Una galería para la serie de decisiones imposibles, magia y personajes que se quedan en la cabeza.',
+          images: [
+            ['https://a.storyblok.com/f/178900/640x908/5dfce254c2/ae642e82116589b128132c62322786381575992895_full.png/m/640x908', 'Arte de Re:ZERO con Emilia y Subaru'],
+            ['https://cdn.erulabo.com/editor/SWfYnHiHQlOCFcGLYK7gdCyEVKBQZrpNbz6FUqwb.webp', 'Personajes principales de Re:ZERO'],
+            ['https://assets.st-note.com/production/uploads/images/14444202/rectangle_large_type_2_82cd23975777a501ccb2f71366365bb6.jpeg?width=1280', 'Emilia, Rem y Ram de Re:ZERO']
+          ]
+        },
+        konosuba: {
+          title: 'KonoSuba',
+          kicker: 'Fantasía · comedia · explosiones',
+          description: 'Un equipo caótico, un montón de magia y las mejores energías para ver sin parar.',
+          images: [
+            ['https://spice.eplus.jp/images/Oa0WcKybRXB14DnlzUvrhgajQ0VgfSQ84sprw8Gd38pSc6mI2kaEYhQhovqWeE2C', 'Arte promocional de KonoSuba'],
+            ['https://i.kym-cdn.com/photos/images/original/001/207/408/e9e.jpg', 'Personajes principales de KonoSuba'],
+            ['https://konosuba.com/3rd/bd/img/ova/shop-animate.jpg', 'Aqua, Megumin y Darkness de KonoSuba']
+          ]
+        },
+        onepiece: {
+          title: 'One Piece',
+          kicker: 'Piratas · sueños · aventura',
+          description: 'Un rincón para la tripulación, los mares y los personajes que hacen que la aventura nunca se acabe.',
+          images: [
+            ['https://nami.news/wordpress/wp-content/uploads/2025/08/One-Piece-novel-HEROINES-Anime-Visual.jpeg', 'Arte de One Piece Heroines'],
+            ['https://imgsrv.crunchyroll.com/cdn-cgi/image/fit%3Dcontain%2Cformat%3Dauto%2Cquality%3D70%2Cwidth%3D1200%2Cheight%3D675/catalog/crunchyroll/2c5867ef4b8f5802e62a217c605d63e7.png', 'Nami y Robin de One Piece'],
+            ['https://m.media-amazon.com/images/S/pv-target-images/a61be9982481ed031cd8025493abb9134e3d7aac14feefe89eb85aac7cef61a5.jpg', 'Nami y Robin en el barco de One Piece']
+          ]
+        }
+      };
+
+      const animeModal = document.querySelector('#anime-modal');
+      const animeModalContent = document.querySelector('#anime-modal-content');
+      const closeAnimeModal = document.querySelector('#modal-close');
+
+      document.querySelectorAll('.anime-card').forEach((card) => card.addEventListener('click', () => {
+        const anime = animeLibrary[card.dataset.anime];
+        animeModalContent.innerHTML = `
+          <div class="modal-kicker">${anime.kicker}</div>
+          <h2 class="modal-title" id="modal-title">${anime.title}</h2>
+          <p class="modal-description">${anime.description}</p>
+          <div class="anime-gallery">${anime.images.map(([src, alt]) => `<img src="${src}" alt="${alt}" loading="lazy">`).join('')}</div>`;
+        animeModal.showModal();
+      }));
+
+      closeAnimeModal.addEventListener('click', () => animeModal.close());
+      animeModal.addEventListener('click', (event) => { if (event.target === animeModal) animeModal.close(); });
+
+      const zeroModal = document.querySelector('#zero-modal');
+      document.querySelector('#zero-trigger').addEventListener('click', () => zeroModal.showModal());
+      document.querySelector('#zero-modal-close').addEventListener('click', () => zeroModal.close());
+      zeroModal.addEventListener('click', (event) => { if (event.target === zeroModal) zeroModal.close(); });
+    </script>
+  </body>
+</html>
