@@ -149,6 +149,17 @@
       .chamba p { max-width: 380px; margin: 0; font-size: 18px; font-weight: 700; line-height: 1.5; }
       .chamba .stamp { margin-top: 18px; font: 12px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
 
+      .games-zone { margin-top: 86px; }
+      .games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px; }
+      .game-card { position: relative; min-height: 400px; display: flex; align-items: end; overflow: hidden; background: #191a21; border: 1px solid var(--line); }
+      .game-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
+      .game-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(5, 5, 7, .96), rgba(5, 5, 7, .06) 74%); }
+      .game-card:hover img { transform: scale(1.06); }
+      .game-copy { position: relative; z-index: 1; padding: 30px; }
+      .game-copy .tag { color: var(--blue); }
+      .game-copy h3 { margin: 8px 0 6px; font-size: clamp(34px, 4vw, 54px); line-height: .9; letter-spacing: -.055em; }
+      .game-copy p { margin: 0; max-width: 400px; color: #e0e0e2; font-size: 14px; line-height: 1.6; }
+
       .anime-zone { margin-top: 86px; }
       .anime-banner {
         display: grid;
@@ -161,7 +172,7 @@
       }
       .anime-banner h2 { font-size: clamp(70px, 10.5vw, 145px); line-height: .77; }
       .anime-banner p { max-width: 380px; margin: 0; font-size: 17px; font-weight: 700; line-height: 1.55; }
-      .anime-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px; }
+      .anime-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
       .anime-card {
         position: relative;
         min-height: 470px;
@@ -251,7 +262,8 @@
         .card { min-height: 300px; }
         .section-head { padding-top: 58px; }
         .chamba, .anime-banner { grid-template-columns: 1fr; gap: 22px; margin-top: 62px; }
-        .anime-grid { grid-template-columns: 1fr; }
+        .games-grid, .anime-grid { grid-template-columns: 1fr; }
+        .game-card { min-height: 340px; }
         .anime-card { min-height: 390px; }
         .meme-card { grid-template-columns: 1fr; }
         .meme-card img { min-height: 280px; max-height: 470px; }
@@ -333,23 +345,44 @@
         </div>
       </section>
 
+      <section class="games-zone" id="games">
+        <div class="section-head">
+          <h2>Juegos favoritos</h2>
+          <span>Construir, sobrevivir y dominar la ciudad</span>
+        </div>
+        <div class="games-grid">
+          <article class="game-card">
+            <img src="https://cdn.mos.cms.futurecdn.net/v2/t%3A0%2Cl%3A0%2Ccw%3A3840%2Cch%3A2160%2Cq%3A80%2Cw%3A2560/cKx5zU3PdKPT9yLCUghXxX.jpg" alt="Arte promocional de Minecraft" loading="lazy">
+            <div class="game-copy"><span class="tag">01 · MUNDO DE BLOQUES</span><h3>Minecraft</h3><p>Construir lo que sea, explorar sin final y sobrevivir una noche más.</p></div>
+          </article>
+          <article class="game-card">
+            <img src="https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png" alt="Portada de Grand Theft Auto V" loading="lazy">
+            <div class="game-copy"><span class="tag">02 · CIUDAD SIN REGLAS</span><h3>GTA V</h3><p>Misiones, carros, caos y el mapa de Los Santos para perderse horas.</p></div>
+          </article>
+        </div>
+      </section>
+
       <section class="anime-zone" id="anime">
         <div class="anime-banner">
           <h2>Tiver<br>puta.</h2>
-          <p>El multiverso definitivo: volver a empezar, explotar todo y navegar hasta encontrar el One Piece.</p>
+          <p>Piratas, reinicios, magia caótica y titanes: mis animes favoritos en orden.</p>
         </div>
         <div class="anime-grid">
+          <button class="anime-card" type="button" data-anime="onepiece" aria-label="Abrir galería de One Piece">
+            <img src="https://image.tmdb.org/t/p/w500/y7IozUi2dwICMl8aGvLxjTmJDYZ.jpg" alt="Tripulación de One Piece" />
+            <div class="anime-copy"><span class="tag">01 · Aventura infinita</span><h3>One Piece</h3><p>Amistad, mar, sueños enormes y una tripulación que nunca abandona.</p></div>
+          </button>
           <button class="anime-card" type="button" data-anime="rezero" aria-label="Abrir galería de Re:ZERO">
-            <img src="https://www.arthipo.com/image/cache/catalog/poster/anime/700-1341/anime980-re-zero-anime-manga-poster-802x1100.webp" alt="Personajes de Re:ZERO" />
-            <div class="anime-copy"><span class="tag">01 · Isekai oscuro</span><h3>Re:ZERO</h3><p>Reinicios, decisiones imposibles y ese tipo de historia que te deja pensando.</p></div>
+            <img src="https://pbs.twimg.com/media/HLFcA-1boAAIoqr.jpg" alt="Arte de Re:ZERO" />
+            <div class="anime-copy"><span class="tag">02 · Isekai oscuro</span><h3>Re:ZERO</h3><p>Reinicios, decisiones imposibles y ese tipo de historia que te deja pensando.</p></div>
           </button>
           <button class="anime-card" type="button" data-anime="konosuba" aria-label="Abrir galería de KonoSuba">
             <img src="https://picfiles.alphacoders.com/379/thumb-1920-379757.jpg" alt="Personajes de KonoSuba" />
-            <div class="anime-copy"><span class="tag">02 · Caos mágico</span><h3>KonoSuba</h3><p>Una party desastrosa, humor sin pausa y la explosión más icónica.</p></div>
+            <div class="anime-copy"><span class="tag">03 · Caos mágico</span><h3>KonoSuba</h3><p>Una party desastrosa, humor sin pausa y la explosión más icónica.</p></div>
           </button>
-          <button class="anime-card" type="button" data-anime="onepiece" aria-label="Abrir galería de One Piece">
-            <img src="https://image.tmdb.org/t/p/w500/y7IozUi2dwICMl8aGvLxjTmJDYZ.jpg" alt="Tripulación de One Piece" />
-            <div class="anime-copy"><span class="tag">03 · Aventura infinita</span><h3>One Piece</h3><p>Amistad, mar, sueños enormes y una tripulación que nunca abandona.</p></div>
+          <button class="anime-card" type="button" data-anime="attackontitan" aria-label="Abrir galería de Attack on Titan">
+            <img src="https://image.tmdb.org/t/p/w500/hf9LzcMFb1JkYSjCKx0au1CgSUK.jpg" alt="Personajes de Attack on Titan" />
+            <div class="anime-copy"><span class="tag">04 · HUMANIDAD VS TITANES</span><h3>Attack on Titan</h3><p>Muros, libertad y batallas que se sienten gigantes.</p></div>
           </button>
         </div>
       </section>
@@ -449,6 +482,16 @@
             ['https://nami.news/wordpress/wp-content/uploads/2025/08/One-Piece-novel-HEROINES-Anime-Visual.jpeg', 'Arte de One Piece Heroines'],
             ['https://imgsrv.crunchyroll.com/cdn-cgi/image/fit%3Dcontain%2Cformat%3Dauto%2Cquality%3D70%2Cwidth%3D1200%2Cheight%3D675/catalog/crunchyroll/2c5867ef4b8f5802e62a217c605d63e7.png', 'Nami y Robin de One Piece'],
             ['https://m.media-amazon.com/images/S/pv-target-images/a61be9982481ed031cd8025493abb9134e3d7aac14feefe89eb85aac7cef61a5.jpg', 'Nami y Robin en el barco de One Piece']
+          ]
+        },
+        attackontitan: {
+          title: 'Attack on Titan',
+          kicker: 'Muros · libertad · titanes',
+          description: 'Una galería para las batallas, los muros y la historia que dejó a todos pensando.',
+          images: [
+            ['https://s.anixmirai.com/posters/3Qs3gj66YFOmyIfCTg9oak6KoyU8x9.jpg', 'Eren, Mikasa y Armin de Attack on Titan'],
+            ['https://image.tmdb.org/t/p/w500/bf6FR3IMBZjTwbWE8ZAC4dUwz20.jpg', 'Arte de Attack on Titan The Final Season'],
+            ['https://www.crank-in.net/img/db/1396777_1200.jpg', 'Visual de Attack on Titan con Eren']
           ]
         }
       };
