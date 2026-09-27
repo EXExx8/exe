@@ -84,17 +84,23 @@
         position: absolute;
         inset: 0;
         z-index: 0;
-        opacity: .82;
-        background: radial-gradient(circle at 77% 24%, rgba(87, 183, 235, .75) 0 2px, transparent 3px), radial-gradient(circle at 73% 35%, rgba(237, 36, 55, .75) 0 2px, transparent 3px), radial-gradient(circle at 83% 49%, rgba(156, 99, 255, .65) 0 2px, transparent 3px);
-        background-size: 90px 90px, 133px 133px, 157px 157px;
-        mask-image: linear-gradient(90deg, transparent 35%, #000 72%);
+        opacity: .9;
+        background:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpath fill='%23070d18' fill-opacity='.88' d='M0,900V660H80V470H145V610H225V540H300V690H380V390H480V620H550V510H650V690H735V430H850V570H940V350H1060V630H1130V480H1210V690H1290V410H1400V590H1480V500H1600V900Z'/%3E%3Cpath fill='%2357b7eb' fill-opacity='.38' d='M405,450H455V461H405ZM405,485H455V496H405ZM405,520H455V531H405ZM760,488H825V499H760ZM760,525H825V536H760ZM965,410H1035V421H965ZM965,450H1035V461H965ZM1320,465H1380V476H1320ZM1320,505H1380V516H1320Z'/%3E%3Cpath fill='%23ed2437' fill-opacity='.4' d='M98,505H130V516H98ZM245,580H282V591H245ZM1155,525H1188V536H1155ZM1505,555H1550V566H1505Z'/%3E%3C/svg%3E") center bottom / cover no-repeat,
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cg fill='none' stroke='%2357b7eb' stroke-opacity='.34' stroke-width='2'%3E%3Cpath d='M1360,150L1270,0M1360,150L1450,0M1360,150L1600,105M1360,150L1600,310M1360,150L1490,410M1360,150L1260,375M1360,150L1150,260M1285,55Q1360,105,1435,55M1240,130Q1360,210,1490,130M1190,230Q1360,330,1540,230M1225,320Q1360,410,1495,320'/%3E%3C/g%3E%3C/svg%3E") center / cover no-repeat,
+          radial-gradient(circle at 77% 24%, rgba(87, 183, 235, .72) 0 2px, transparent 3px),
+          radial-gradient(circle at 73% 35%, rgba(237, 36, 55, .72) 0 2px, transparent 3px),
+          radial-gradient(circle at 83% 49%, rgba(156, 99, 255, .65) 0 2px, transparent 3px);
+        background-size: cover, cover, 90px 90px, 133px 133px, 157px 157px;
+        mask-image: linear-gradient(90deg, transparent 28%, #000 62%);
       }
       .hero::after {
         content: '';
         position: absolute;
         inset: 0;
         z-index: 0;
-        background: repeating-linear-gradient(90deg, transparent 0 68px, rgba(255,255,255,.055) 69px 70px);
+        opacity: .72;
+        background: repeating-linear-gradient(112deg, transparent 0 48px, rgba(87,183,235,.13) 49px 50px, transparent 51px 96px), repeating-linear-gradient(90deg, transparent 0 68px, rgba(255,255,255,.055) 69px 70px);
       }
       .hero-content { position: relative; z-index: 1; max-width: 780px; }
       .hero-content::before { content: 'EXE'; position: absolute; z-index: -1; top: -76px; left: -12px; color: rgba(255,255,255,.055); font: 400 clamp(160px, 27vw, 370px)/.7 'Bebas Neue', sans-serif; letter-spacing: -.07em; pointer-events: none; }
