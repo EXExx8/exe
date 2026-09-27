@@ -13,6 +13,8 @@
         --paper: #101114;
         --red: #ed2437;
         --blue: #57b7eb;
+        --violet: #9c63ff;
+        --glow: rgba(87, 183, 235, .35);
         --muted: #a9abb3;
         --line: rgba(248, 247, 242, 0.16);
       }
@@ -22,10 +24,11 @@
       body {
         margin: 0;
         color: var(--ink);
-        background: var(--paper);
+        background: radial-gradient(circle at 12% 4%, rgba(156, 99, 255, .18), transparent 28rem), radial-gradient(circle at 90% 24%, rgba(237, 36, 55, .12), transparent 28rem), var(--paper);
         font-family: Manrope, sans-serif;
         overflow-x: hidden;
       }
+      ::selection { background: var(--red); color: #fff; }
 
       .noise {
         position: fixed;
@@ -37,25 +40,36 @@
       }
 
       nav {
-        position: absolute;
-        top: 0;
-        z-index: 2;
-        width: 100%;
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        z-index: 20;
+        width: min(1240px, calc(100% - 28px));
+        transform: translateX(-50%);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 24px clamp(22px, 6vw, 84px);
+        padding: 13px 18px 13px 22px;
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 999px;
+        background: rgba(11, 12, 17, .68);
+        box-shadow: 0 12px 42px rgba(0,0,0,.22);
+        backdrop-filter: blur(16px);
         font-size: 13px;
         font-weight: 800;
         letter-spacing: .08em;
         text-transform: uppercase;
       }
-      .logo { color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .12em; }
-      nav a { color: var(--ink); text-decoration: none; opacity: .8; }
-      nav a:hover { color: var(--blue); opacity: 1; }
+      .logo { color: var(--ink); text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .12em; }
+      .logo::after { content: '●'; margin-left: 5px; color: var(--red); font-size: 12px; vertical-align: middle; text-shadow: 0 0 14px var(--red); }
+      .nav-links { display: flex; align-items: center; gap: 7px; }
+      .nav-links a { padding: 8px 11px; border-radius: 999px; color: var(--ink); text-decoration: none; opacity: .78; transition: color .2s ease, background .2s ease, transform .2s ease; }
+      .nav-links a:hover { color: #0d121a; background: var(--blue); opacity: 1; transform: translateY(-1px); }
 
       .hero {
         position: relative;
+        isolation: isolate;
+        overflow: hidden;
         min-height: 100svh;
         display: grid;
         align-content: end;
@@ -65,14 +79,25 @@
           linear-gradient(0deg, #101114 0%, transparent 35%),
           url('preview-chase.png') center / cover;
       }
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        opacity: .82;
+        background: radial-gradient(circle at 77% 24%, rgba(87, 183, 235, .75) 0 2px, transparent 3px), radial-gradient(circle at 73% 35%, rgba(237, 36, 55, .75) 0 2px, transparent 3px), radial-gradient(circle at 83% 49%, rgba(156, 99, 255, .65) 0 2px, transparent 3px);
+        background-size: 90px 90px, 133px 133px, 157px 157px;
+        mask-image: linear-gradient(90deg, transparent 35%, #000 72%);
+      }
       .hero::after {
         content: '';
         position: absolute;
         inset: 0;
         z-index: 0;
-        background: repeating-linear-gradient(90deg, transparent 0 68px, rgba(255,255,255,.04) 69px 70px);
+        background: repeating-linear-gradient(90deg, transparent 0 68px, rgba(255,255,255,.055) 69px 70px);
       }
       .hero-content { position: relative; z-index: 1; max-width: 780px; }
+      .hero-content::before { content: 'EXE'; position: absolute; z-index: -1; top: -76px; left: -12px; color: rgba(255,255,255,.055); font: 400 clamp(160px, 27vw, 370px)/.7 'Bebas Neue', sans-serif; letter-spacing: -.07em; pointer-events: none; }
       .eyebrow {
         display: flex;
         gap: 10px;
@@ -89,10 +114,15 @@
         font: 400 clamp(64px, 12vw, 154px)/.78 'Bebas Neue', sans-serif;
         letter-spacing: -.02em;
         text-transform: uppercase;
+        text-shadow: 0 12px 36px rgba(0,0,0,.32);
       }
       h1 em { color: var(--red); font-style: normal; }
       .hero p { max-width: 500px; color: #d1d2d6; line-height: 1.7; font-size: clamp(14px, 1.7vw, 17px); }
       .scroll { position: absolute; z-index: 2; right: clamp(22px, 6vw, 84px); bottom: 60px; writing-mode: vertical-rl; color: var(--muted); font: 12px 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+      .hero-stats { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 28px; }
+      .hero-stats span { padding: 8px 11px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; background: rgba(8,9,12,.42); color: #eef7ff; font: 11px 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; backdrop-filter: blur(8px); }
+      .hero-stats span:nth-child(2) { border-color: rgba(87,183,235,.55); color: var(--blue); }
+      .hero-stats span:nth-child(3) { border-color: rgba(237,36,55,.55); color: #ff9fa9; }
 
       main { max-width: 1400px; margin: auto; padding: 0 clamp(22px, 6vw, 84px) 78px; }
       .intro { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; padding: 86px 0 60px; border-bottom: 1px solid var(--line); }
@@ -112,7 +142,9 @@
         padding: 26px;
         overflow: hidden;
         border: 1px solid var(--line);
+        border-radius: 20px;
         background: #1a1b20;
+        box-shadow: 0 16px 40px rgba(0,0,0,.18);
         transition: transform .25s ease, border-color .25s ease;
       }
       .card:hover { transform: translateY(-7px); border-color: var(--blue); }
@@ -127,7 +159,7 @@
       .card h3 { margin: 9px 0 4px; font-size: 27px; letter-spacing: -.04em; }
       .card p { margin: 0; color: #d6d5d5; font-size: 14px; line-height: 1.6; }
 
-      .playlist { margin-top: 86px; border-top: 1px solid var(--line); }
+      .playlist { margin-top: 86px; padding: 0 clamp(18px, 3vw, 38px) 28px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(135deg, rgba(87,183,235,.08), rgba(156,99,255,.06) 48%, rgba(237,36,55,.08)); box-shadow: 0 18px 48px rgba(0,0,0,.16); }
       .track { display: grid; grid-template-columns: 70px 1fr auto; gap: 20px; align-items: center; padding: 21px 0; border-bottom: 1px solid var(--line); color: inherit; }
       .track:hover { color: var(--red); }
       .track-id { color: var(--muted); font: 12px 'DM Mono', monospace; }
@@ -144,6 +176,8 @@
         padding: clamp(32px, 5vw, 70px);
         background: var(--blue);
         color: #09131b;
+        border-radius: 22px;
+        box-shadow: 0 20px 50px rgba(87,183,235,.16);
       }
       .chamba h2 { font-size: clamp(64px, 9vw, 122px); line-height: .82; }
       .chamba p { max-width: 380px; margin: 0; font-size: 18px; font-weight: 700; line-height: 1.5; }
@@ -151,7 +185,7 @@
 
       .games-zone { margin-top: 86px; }
       .games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px; }
-      .game-card { position: relative; min-height: 400px; display: flex; align-items: end; overflow: hidden; background: #191a21; border: 1px solid var(--line); }
+      .game-card { position: relative; min-height: 400px; display: flex; align-items: end; overflow: hidden; background: #191a21; border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 16px 40px rgba(0,0,0,.16); }
       .game-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
       .game-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(5, 5, 7, .96), rgba(5, 5, 7, .06) 74%); }
       .game-card:hover img { transform: scale(1.06); }
@@ -169,6 +203,8 @@
         padding: clamp(30px, 5vw, 66px);
         background: var(--red);
         color: #fff;
+        border-radius: 22px;
+        box-shadow: 0 20px 52px rgba(237,36,55,.18);
       }
       .anime-banner h2 { font-size: clamp(70px, 10.5vw, 145px); line-height: .77; }
       .anime-banner p { max-width: 380px; margin: 0; font-size: 17px; font-weight: 700; line-height: 1.55; }
@@ -181,6 +217,7 @@
         overflow: hidden;
         background: #191a21;
         border: 1px solid var(--line);
+        border-radius: 18px;
         width: 100%;
         padding: 0;
         color: inherit;
@@ -197,7 +234,7 @@
       .anime-copy p { margin: 0; color: #e0e0e2; font-size: 13px; line-height: 1.6; }
 
       .meme-zone { margin-top: 15px; }
-      .meme-card { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; overflow: hidden; background: #e6dfd0; color: #111114; }
+      .meme-card { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; overflow: hidden; border-radius: 22px; background: #e6dfd0; color: #111114; box-shadow: 0 20px 50px rgba(0,0,0,.18); }
       .meme-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(34px, 6vw, 76px); }
       .meme-copy .tag { color: var(--red); }
       .meme-copy h2 { margin: 12px 0 0; font-size: clamp(56px, 8.5vw, 118px); line-height: .78; }
@@ -239,7 +276,7 @@
       .cosplay-modal p { margin: 14px 4px 2px; color: var(--blue); font: 12px 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
 
       .zero-zone { margin-top: 15px; }
-      .zero-trigger { width: 100%; min-height: 390px; padding: clamp(34px, 6vw, 72px); color: #111114; background: #f0cf38; border: 0; font: inherit; text-align: left; cursor: pointer; transition: filter .2s ease, transform .2s ease; }
+      .zero-trigger { width: 100%; min-height: 390px; padding: clamp(34px, 6vw, 72px); color: #111114; background: #f0cf38; border: 0; border-radius: 22px; font: inherit; text-align: left; cursor: pointer; transition: filter .2s ease, transform .2s ease; box-shadow: 0 20px 50px rgba(240,207,56,.14); }
       .zero-trigger:hover { filter: brightness(1.08); transform: translateY(-4px); }
       .zero-trigger .tag { color: #111114; }
       .zero-trigger h2 { max-width: 900px; margin: 13px 0 0; font-size: clamp(66px, 10vw, 144px); line-height: .77; }
@@ -255,7 +292,8 @@
 
       @media (max-width: 700px) {
         .hero { min-height: 740px; background-position: 62% center; }
-        nav a { display: none; }
+        nav { top: 8px; width: calc(100% - 18px); padding: 10px 16px; }
+        .nav-links { display: none; }
         .scroll { display: none; }
         .intro { grid-template-columns: 1fr; gap: 18px; padding-top: 62px; }
         .cards { grid-template-columns: 1fr; }
@@ -275,20 +313,33 @@
         .cosplay-shot:nth-child(6), .cosplay-shot:nth-child(9) { grid-column: span 2; }
         footer { flex-direction: column; }
       }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .hero-stats span { animation: float-chip 4s ease-in-out infinite; }
+        .hero-stats span:nth-child(2) { animation-delay: .4s; }
+        .hero-stats span:nth-child(3) { animation-delay: .8s; }
+        @keyframes float-chip { 50% { transform: translateY(-4px); } }
+      }
     </style>
   </head>
   <body>
     <div class="noise"></div>
     <nav>
-      <span class="logo">EXE</span>
-      <a href="#favoritos">Ver favoritos ↓</a>
+      <a class="logo" href="#top">EXE</a>
+      <div class="nav-links">
+        <a href="#favoritos">Favoritos</a>
+        <a href="#games">Juegos</a>
+        <a href="#anime">Animes</a>
+        <a href="#cosplay">Cosplay</a>
+      </div>
     </nav>
 
-    <header class="hero">
+    <header class="hero" id="top">
       <div class="hero-content">
         <div class="eyebrow">EXE · Archivo personal</div>
         <h1>Las cosas que <em>me mueven.</em></h1>
         <p>Un rincón para guardar mis obsesiones: escenas que se sienten como cine, música a todo volumen y aventuras que no se olvidan.</p>
+        <div class="hero-stats"><span>EXE // ONLINE</span><span>02 juegos</span><span>04 animes</span></div>
       </div>
       <span class="scroll">Desliza para explorar</span>
     </header>
